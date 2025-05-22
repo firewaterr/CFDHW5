@@ -17,14 +17,14 @@ clc;
 close all;
 
 %% Parameters
-Nx = 200;
-Ny = 200;
+Nx = 100;
+Ny = 100;
 Lx = 1;
 Ly = 1;
 dx = Lx / Nx;
 dy = Ly / Ny;
 T = 1; % Total time
-Nt = 400;
+Nt = 200;
 dt = T / Nt; % Time step
 mu = 0.001; % Viscosity
 relaxationFactor = 1.95; % Relaxation factor for streamfunction iteration
@@ -85,6 +85,22 @@ for i = 2:Nx+1
         V(i,j) = (Psi(i+1,j) - Psi(i-1,j)) / (2*dx);
     end
 end
+
+%% Center of the Vorticity
+[minValue, minIndex] = min(Psi(:));
+[rowIndex, colIndex] = ind2sub(size(Psi), minIndex);
+Centerx = (Nx+2-rowIndex)/(Nx+2);
+Centery = colIndex/(Ny+2);
+disp(['最小值: ', num2str(minValue)]);
+disp(['横坐标 (行): ', num2str(Centerx)]);
+disp(['纵坐标 (列): ', num2str(Centery)]);
+[maxValue, maxIndex] = max(Psi(:));
+[rowIndex, colIndex] = ind2sub(size(Psi), maxIndex);
+Centerx = (Nx+2-rowIndex)/(Nx+2);
+Centery = colIndex/(Ny+2);
+disp(['最大值: ', num2str(maxValue)]);
+disp(['横坐标 (行): ', num2str(Centerx)]);
+disp(['纵坐标 (列): ', num2str(Centery)]);
 
 %% Plot the Results
 figure;
